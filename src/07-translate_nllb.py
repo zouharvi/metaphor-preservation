@@ -3,21 +3,20 @@
 import json
 import os
 import tqdm
-from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
+from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
 import torch
 
 DEVICE = "cuda:0" if torch.cuda.is_available() else "cpu"
 
-tokenizer = AutoTokenizer.from_pretrained("Helsinki-NLP/opus-mt-en-cs")
-model = AutoModelForSeq2SeqLM.from_pretrained(
-    "Helsinki-NLP/opus-mt-en-cs").to(DEVICE)
+tokenizer = AutoTokenizer.from_pretrained("facebook/nllb-200-1.3B")
+model = AutoModelForSeq2SeqLM.from_pretrained("facebook/nllb-200-1.3B").to(DEVICE)
 
 os.makedirs("data/output", exist_ok=True)
 data = [json.loads(x) for x in open("data/dataset.jsonl", "r")]
 
 LANG_TO_NAME = {
-    "cs": "Czech",
-    "de": "German",
+    "cs": "ces_Latn",
+    "de": "deu_Latn",
 }
 
 
@@ -25,18 +24,15 @@ def translate_text(text, target_lang):
     target_lang = LANG_TO_NAME[target_lang]
 
     # batch size 1
-    input_ids = tokenizer(
-        text, return_tensors="pt",
-    ).input_ids.to(DEVICE)
-
-    outputs = model.generate(input_ids)
-    decoded = tokenizer.decode(outputs[0], skip_special_tokens=True)
-
+    inputs = tokenizer(text, return_tensors="pt").to(DEVICE)
+    translated_tokens = model.generate(
+        **inputs, forced_bos_token_id=tokenizer.lang_code_to_id[target_lang], max_length=128
+    )
+    decoded = tokenizer.batch_decode(translated_tokens, skip_special_tokens=True)[0]
     return decoded
 
-
 for target_lang in ["cs", "de"]:
-    out_file = open(f"data/output/translate_t5_{target_lang}.jsonl", "w")
+    out_file = open(f"data/output/translate_nllb_{target_lang}.jsonl", "w")
     for line in tqdm.tqdm(data):
         if line["text_lit"]:
             line["text_lit"] = translate_text(line["text_lit"], target_lang)
