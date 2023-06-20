@@ -2,6 +2,7 @@
 env/
 meta/openai_key.txt
 raw/
+computed/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
