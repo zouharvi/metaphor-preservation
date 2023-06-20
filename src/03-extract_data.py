@@ -17,7 +17,7 @@ def write_to_file(x, line):
     files[x].write(line)
 
 
-data = [json.loads(x) for x in open("data/dataset.jsonl", "r")]
+data = [json.loads(x) for x in open("data/output/dataset.jsonl", "r")]
 
 for o in data:
     write_to_file(f'{o["dataset"]}_met', f'{o["text_met"]}\n')

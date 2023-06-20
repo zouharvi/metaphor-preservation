@@ -16,8 +16,6 @@ def paraphrase_text(text):
     encoding = tokenizer.encode_plus(text,pad_to_max_length=True, return_tensors="pt")
     input_ids, attention_masks = encoding["input_ids"].to("cuda"), encoding["attention_mask"].to(DEVICE)
 
-
-
     outputs = model.generate(
         input_ids=input_ids, attention_mask=attention_masks,
         max_length=256,
@@ -33,7 +31,7 @@ def paraphrase_text(text):
     return line
 
 os.makedirs("data/output", exist_ok=True)
-data = [json.loads(x) for x in open("data/dataset.jsonl", "r")]
+data = [json.loads(x) for x in open("data/output/dataset.jsonl", "r")]
 
 out_file = open(f"data/output/paraphrase_paws.jsonl", "w")
 for line in tqdm.tqdm(data):

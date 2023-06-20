@@ -39,7 +39,7 @@ for cluster in data:
 
 data_out += data_out_fmo[:200]
 
-open("data/dataset.jsonl", "w").write("\n".join([
+open("data/output/dataset.jsonl", "w").write("\n".join([
     json.dumps(o, ensure_ascii=False) for o in data_out
 ]) + "\n")
 

@@ -7,7 +7,7 @@ import tqdm
 import time
 
 os.makedirs("data/output", exist_ok=True)
-data = [json.loads(x) for x in open("data/dataset.jsonl", "r")]
+data = [json.loads(x) for x in open("data/output/dataset.jsonl", "r")]
 
 client = translate.TranslationServiceClient()
 

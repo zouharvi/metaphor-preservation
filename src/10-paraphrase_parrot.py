@@ -17,7 +17,7 @@ def paraphrase_text(input_text):
         return input_text
 
 os.makedirs("data/output", exist_ok=True)
-data = [json.loads(x) for x in open("data/dataset.jsonl", "r")]
+data = [json.loads(x) for x in open("data/output/dataset.jsonl", "r")]
 
 out_file = open(f"data/output/paraphrase_parrot.jsonl", "w")
 for line in tqdm.tqdm(data):

@@ -13,7 +13,7 @@ model = AutoModelForSeq2SeqLM.from_pretrained(
     "Helsinki-NLP/opus-mt-en-cs").to(DEVICE)
 
 os.makedirs("data/output", exist_ok=True)
-data = [json.loads(x) for x in open("data/dataset.jsonl", "r")]
+data = [json.loads(x) for x in open("data/output/dataset.jsonl", "r")]
 
 LANG_TO_NAME = {
     "cs": "Czech",

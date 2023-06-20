@@ -12,7 +12,7 @@ tokenizer = AutoTokenizer.from_pretrained("facebook/nllb-200-1.3B")
 model = AutoModelForSeq2SeqLM.from_pretrained("facebook/nllb-200-1.3B").to(DEVICE)
 
 os.makedirs("data/output", exist_ok=True)
-data = [json.loads(x) for x in open("data/dataset.jsonl", "r")]
+data = [json.loads(x) for x in open("data/output/dataset.jsonl", "r")]
 
 LANG_TO_NAME = {
     "cs": "ces_Latn",
