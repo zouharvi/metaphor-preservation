@@ -3,7 +3,7 @@
 import json
 import numpy as np
 
-data = [json.loads(x) for x in open("data/output_eval/dataset.jsonl", "r")]
+data = [json.loads(x) for x in open("data/output_eval/paraphrase_pegasus.jsonl", "r")]
 
 trofi_lit_vals = [float(x["text_lit"]) for x in data if x["dataset"]=="trofi" and x["text_lit"]]
 trofi_met_vals = [float(x["text_met"]) for x in data if x["dataset"]=="trofi" and x["text_met"]]
