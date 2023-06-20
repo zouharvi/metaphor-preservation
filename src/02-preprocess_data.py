@@ -5,7 +5,7 @@ from collections import Counter
 
 data_out = []
 
-data = open("data/trofi.txt", "r").readlines()
+data = open("raw/trofi.txt", "r").readlines()
 data = [
     l.removesuffix(" ./.\n").split("\t")[1:]
     for l in data if l.count("\t") == 2
@@ -20,7 +20,7 @@ data_out += [
 ][:200]
 
 data = [
-    l.strip() for l in open("data/fmo.txt", "r").readlines()
+    l.strip() for l in open("raw/fmo.txt", "r").readlines()
     if l.strip() and not l.startswith("###")
 ]
 # and ("#4" in l or not any(l.startswith(x) for x in ["#1", "#2", "#3"]))

@@ -11,7 +11,7 @@ import argparse
 
 args = argparse.ArgumentParser()
 args.add_argument("-i", "--input", default="data/output/dataset.jsonl")
-args.add_argument("-o", "--output", default="data/output_eval/dataset.jsonl")
+args.add_argument("-o", "--output", default="data/eval_preserved/dataset.jsonl")
 args = args.parse_args()
 
 openai.api_key_path = "meta/openai_key.txt"
@@ -66,8 +66,8 @@ for line_src, line_new in tqdm.tqdm(zip(data_src, data_new), total=len(data_src)
     ]) + "\n")
 
 
-# for MODEL in "translate_deepl_cs" "translate_deepl_de" "translate_google_cs" "translate_google_de" "translate_nllb_cs" "translate_nllb_de" "translate_t5_cs" "translate_t5_de"; do
-# for MODEL in "paraphrase_bart" "paraphrase_parrot" "paraphrase_paws" "paraphrase_pegasus"; do
-#     echo "Running $MODEL"
-#     ./src/20-eval_metaphor_present.py -i "data/output/${MODEL}.jsonl" -o "data/output_eval/${MODEL}.jsonl"
+# for MODEL in "paraphrase_bart" "paraphrase_parrot" "paraphrase_paws" "paraphrase_pegasus" "translate_deepl_cs" "translate_deepl_de" "translate_google_cs" "translate_google_de" "translate_nllb_cs" "translate_nllb_de" "translate_t5_cs" "translate_t5_de"; do
+#     echo "Running $MODEL";
+#     ./src/21-eval_metaphor_preserved.py -i "data/output/${MODEL}.jsonl" -o "data/eval_preserved/${MODEL}.jsonl";
+#     sleep 10;
 # done
