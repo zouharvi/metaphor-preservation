@@ -16,7 +16,7 @@ args = args.parse_args()
 
 os.makedirs("data/output_eval", exist_ok=True)
 
-openai.api_key = os.getenv("OPENAI_API_KEY")
+openai.api_key_path = "meta/openai_key.txt"
 
 # in case the process gets killed
 data = [json.loads(x) for x in open(args.input, "r")]
@@ -26,10 +26,16 @@ if os.path.exists(args.output):
 else:
     data_out = []
 
-@backoff.on_exception(backoff.expo, openai.error.RateLimitError, max_tries=16, jitter=None)
+
+@backoff.on_exception(
+    backoff.expo,
+    catch_exceptions=[
+        type(openai.error.RateLimitError),
+        type(openai.error.APIError)
+    ],
+    max_tries=16, jitter=None
+)
 def get_metaphor_rating(text):
-    # micro throttle
-    time.sleep(0.3)
     completion = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
         messages=[
@@ -42,6 +48,7 @@ def get_metaphor_rating(text):
     # print(completion)
     rating = completion.choices[0].message.content
     return rating
+
 
 for line in tqdm.tqdm(data):
     line = copy.deepcopy(line)
@@ -57,3 +64,10 @@ for line in tqdm.tqdm(data):
     out_file.write("\n".join([
         json.dumps(o, ensure_ascii=False) for o in data_out
     ]) + "\n")
+
+
+# for MODEL in "paraphrase_bart" "paraphrase_parrot" "paraphrase_paws" "paraphrase_pegasus"; do
+#     echo "Running $MODEL"
+#     ./src/20-eval_metaphor_present.py -i "data/output/${MODEL}.jsonl" -o "data/output_eval/${MODEL}.jsonl"
+# done
+# for MODEL in "translate_deepl_cs" "translate_deepl_de" "translate_google_cs" "translate_google_de" "translate_nllb_cs" "translate_nllb_de" "translate_t5_cs" "translate_t5_de"; do
