@@ -32,7 +32,7 @@ STYLE_KWARGS = {
 trofi_sum = sum(freqs["trofi_lit"].values()) + sum(freqs["trofi_met"].values())
 fmo_sum = sum(freqs["fmo_lit"].values()) + sum(freqs["fmo_met"].values())
 
-plt.figure(figsize=(4, 2))
+plt.figure(figsize=(4, 1.8))
 
 plt.barh(
     y=range(1, 6),
@@ -72,6 +72,7 @@ plt.xticks(
     [1, 1.5],
     ["Trofi", "FMO"]
 )
+plt.yticks(range(1, 6))
 plt.tight_layout(pad=0.1)
 plt.savefig("computed/figures/base_violin.svg")
 plt.show()
