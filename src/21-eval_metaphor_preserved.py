@@ -29,9 +29,7 @@ else:
 
 @backoff.on_exception(
     backoff.expo,
-    exception=openai.error.RateLimitError,
-    #     type(openai.error.APIError)
-    # ],
+    exception=(openai.error.RateLimitError, openai.error.ServiceUnavailableError, openai.error.APIError),
     max_tries=16, jitter=None
 )
 def get_metaphor_rating(text_src, text_new):

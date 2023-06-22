@@ -29,7 +29,8 @@ def translate_text(text, target_lang):
     return decoded
 
 
-for target_lang in ["cs", "de"]:
+# for target_lang in ["cs", "de"]:
+for target_lang in ["de"]:
     # load data again
     data = [json.loads(x) for x in open("data/output/dataset.jsonl", "r")]
     out_file = open(f"data/output/translate_nllb_{target_lang}.jsonl", "w")
