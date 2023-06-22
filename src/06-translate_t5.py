@@ -15,23 +15,13 @@ model = AutoModelForSeq2SeqLM.from_pretrained(
 os.makedirs("data/output", exist_ok=True)
 data = [json.loads(x) for x in open("data/output/dataset.jsonl", "r")]
 
-LANG_TO_NAME = {
-    "cs": "Czech",
-    "de": "German",
-}
-
-
 def translate_text(text, target_lang):
-    target_lang = LANG_TO_NAME[target_lang]
-
     # batch size 1
     input_ids = tokenizer(
         text, return_tensors="pt",
     ).input_ids.to(DEVICE)
-
     outputs = model.generate(input_ids)
     decoded = tokenizer.decode(outputs[0], skip_special_tokens=True)
-
     return decoded
 
 

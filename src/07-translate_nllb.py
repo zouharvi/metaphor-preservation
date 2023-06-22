@@ -22,7 +22,6 @@ LANG_TO_NAME = {
 
 def translate_text(text, target_lang):
     target_lang = LANG_TO_NAME[target_lang]
-
     # batch size 1
     inputs = tokenizer(text, return_tensors="pt").to(DEVICE)
     translated_tokens = model.generate(
@@ -30,6 +29,7 @@ def translate_text(text, target_lang):
     )
     decoded = tokenizer.batch_decode(translated_tokens, skip_special_tokens=True)[0]
     return decoded
+
 
 for target_lang in ["cs", "de"]:
     out_file = open(f"data/output/translate_nllb_{target_lang}.jsonl", "w")
