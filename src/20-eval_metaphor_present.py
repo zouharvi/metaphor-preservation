@@ -64,7 +64,8 @@ for line in tqdm.tqdm(data):
 
 
 # for MODEL in "paraphrase_bart" "paraphrase_parrot" "paraphrase_paws" "paraphrase_pegasus"; do
-# for MODEL in "translate_deepl_cs" "translate_deepl_de" "translate_google_cs" "translate_google_de" "translate_nllb_cs" "translate_nllb_de" "translate_t5_cs" "translate_t5_de"; do
+# for MODEL in "translate_deepl_cs" "translate_deepl_de" "translate_google_cs" "translate_google_de" "translate_nllb_cs" "translate_nllb_de" "translate_opus_cs" "translate_opus_de"; do
+# for MODEL in "translate_deepl_de" "translate_google_de" "translate_nllb_de" "translate_opus_de"; do
 #     echo "Running $MODEL"
 #     ./src/20-eval_metaphor_present.py -i "data/output/${MODEL}.jsonl" -o "data/eval_present/${MODEL}.jsonl"
 # done

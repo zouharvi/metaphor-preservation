@@ -8,25 +8,30 @@ import torch
 
 DEVICE = "cuda:0" if torch.cuda.is_available() else "cpu"
 
-tokenizer = AutoTokenizer.from_pretrained("Helsinki-NLP/opus-mt-en-cs")
-model = AutoModelForSeq2SeqLM.from_pretrained(
-    "Helsinki-NLP/opus-mt-en-cs").to(DEVICE)
+tokenizer = {
+    "cs": AutoTokenizer.from_pretrained("Helsinki-NLP/opus-mt-en-cs"),
+    "de": AutoTokenizer.from_pretrained("Helsinki-NLP/opus-mt-en-de"),
+}
+model = {
+    "cs": AutoModelForSeq2SeqLM.from_pretrained("Helsinki-NLP/opus-mt-en-cs").to(DEVICE),
+    "de": AutoModelForSeq2SeqLM.from_pretrained("Helsinki-NLP/opus-mt-en-de").to(DEVICE),
+}
 
 os.makedirs("data/output", exist_ok=True)
-data = [json.loads(x) for x in open("data/output/dataset.jsonl", "r")]
 
 def translate_text(text, target_lang):
     # batch size 1
-    input_ids = tokenizer(
+    input_ids = tokenizer[target_lang](
         text, return_tensors="pt",
     ).input_ids.to(DEVICE)
-    outputs = model.generate(input_ids)
+    outputs = model[target_lang].generate(input_ids)
     decoded = tokenizer.decode(outputs[0], skip_special_tokens=True)
     return decoded
 
-
 for target_lang in ["cs", "de"]:
-    out_file = open(f"data/output/translate_t5_{target_lang}.jsonl", "w")
+    # load data again
+    data = [json.loads(x) for x in open("data/output/dataset.jsonl", "r")]
+    out_file = open(f"data/output/translate_opus_{target_lang}.jsonl", "w")
     for line in tqdm.tqdm(data):
         if line["text_lit"]:
             line["text_lit"] = translate_text(line["text_lit"], target_lang)

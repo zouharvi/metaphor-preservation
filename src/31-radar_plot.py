@@ -79,6 +79,7 @@ def get_pretty_name():
     text = text.replace("pegasus", "Pegasus")
     text = text.replace("google", "Google")
     text = text.replace("t5", "T5")
+    text = text.replace("opus", "OPUS")
     text = text.replace("deepl", "DeepL")
     text = text.replace("nllb", "NLLB")
     text = text.replace(" cs", " CS")
@@ -106,6 +107,6 @@ plt.savefig(f"computed/figures/radar/{get_bare_name()}.svg")
 plt.show()
 
 
-# for MODEL in "paraphrase_bart" "paraphrase_parrot" "paraphrase_paws" "paraphrase_pegasus" "translate_deepl_cs" "translate_deepl_de" "translate_google_cs" "translate_google_de" "translate_nllb_cs" "translate_nllb_de" "translate_t5_cs" "translate_t5_de"; do
+# for MODEL in "paraphrase_bart" "paraphrase_parrot" "paraphrase_paws" "paraphrase_pegasus" "translate_deepl_cs" "translate_deepl_de" "translate_google_cs" "translate_google_de" "translate_nllb_cs" "translate_nllb_de" "translate_opus_cs" "translate_opus_de"; do
 #     DISPLAY="" ./src/31-radar_plot.py -i "data/eval_EVAL/${MODEL}.jsonl"
 # done

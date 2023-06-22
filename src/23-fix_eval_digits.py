@@ -50,7 +50,7 @@ out_file.write("\n".join([
 ]) + "\n")
 
 
-# for MODEL in "paraphrase_bart" "paraphrase_parrot" "paraphrase_paws" "paraphrase_pegasus" "translate_deepl_cs" "translate_deepl_de" "translate_google_cs" "translate_google_de" "translate_nllb_cs" "translate_nllb_de" "translate_t5_cs" "translate_t5_de"; do
+# for MODEL in "paraphrase_bart" "paraphrase_parrot" "paraphrase_paws" "paraphrase_pegasus" "translate_deepl_cs" "translate_deepl_de" "translate_google_cs" "translate_google_de" "translate_nllb_cs" "translate_nllb_de" "translate_opus_cs" "translate_opus_de"; do
 #     echo "Fixing eval_preserved/$MODEL";
 #     ./src/23-fix_eval_digits.py -i "data/eval_preserved/${MODEL}.jsonl" -o "data/eval_preserved_fixed/${MODEL}.jsonl";
 #     echo "Fixing eval_present/$MODEL";

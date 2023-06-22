@@ -12,13 +12,11 @@ tokenizer = AutoTokenizer.from_pretrained("facebook/nllb-200-1.3B")
 model = AutoModelForSeq2SeqLM.from_pretrained("facebook/nllb-200-1.3B").to(DEVICE)
 
 os.makedirs("data/output", exist_ok=True)
-data = [json.loads(x) for x in open("data/output/dataset.jsonl", "r")]
 
 LANG_TO_NAME = {
     "cs": "ces_Latn",
     "de": "deu_Latn",
 }
-
 
 def translate_text(text, target_lang):
     target_lang = LANG_TO_NAME[target_lang]
@@ -32,6 +30,8 @@ def translate_text(text, target_lang):
 
 
 for target_lang in ["cs", "de"]:
+    # load data again
+    data = [json.loads(x) for x in open("data/output/dataset.jsonl", "r")]
     out_file = open(f"data/output/translate_nllb_{target_lang}.jsonl", "w")
     for line in tqdm.tqdm(data):
         if line["text_lit"]:

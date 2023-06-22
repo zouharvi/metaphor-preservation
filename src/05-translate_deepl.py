@@ -8,8 +8,6 @@ import tqdm
 import time
 
 os.makedirs("data/output", exist_ok=True)
-data = [json.loads(x) for x in open("data/output/dataset.jsonl", "r")]
-
 translator = deepl.Translator(auth_key=environ.get("DEEPL_AUTH"))
 
 def translate_text(text: str, target_language_code: str):
@@ -23,7 +21,10 @@ def translate_text(text: str, target_language_code: str):
     )
     return result.text
 
-for target_lang in ["cs", "de"]:
+# for target_lang in ["cs", "de"]:
+for target_lang in ["de"]:
+    # load data again
+    data = [json.loads(x) for x in open("data/output/dataset.jsonl", "r")]
     out_file = open(f"data/output/translate_deepl_{target_lang}.jsonl", "w")
     for line in tqdm.tqdm(data):
         if line["text_lit"]:

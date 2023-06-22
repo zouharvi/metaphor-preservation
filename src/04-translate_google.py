@@ -7,7 +7,6 @@ import tqdm
 import time
 
 os.makedirs("data/output", exist_ok=True)
-data = [json.loads(x) for x in open("data/output/dataset.jsonl", "r")]
 
 client = translate.TranslationServiceClient()
 
@@ -22,7 +21,10 @@ def translate_text(text: str, target_language_code: str) -> translate.Translatio
     )
     return response.translations[0].translated_text
 
-for target_lang in ["cs", "de"]:
+# for target_lang in ["cs", "de"]:
+for target_lang in ["de"]:
+    # load data again
+    data = [json.loads(x) for x in open("data/output/dataset.jsonl", "r")]
     out_file = open(f"data/output/translate_google_{target_lang}.jsonl", "w")
     for line in tqdm.tqdm(data):
         if line["text_lit"]:
